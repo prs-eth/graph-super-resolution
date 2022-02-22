@@ -16,7 +16,7 @@ We extensively evaluate our method on several datasets, and consistently outperf
 We recommend creating a new conda environment with all required dependencies by running
 ```bash
 conda env create -f environment.yml
-conda activate graph-reg-sr
+conda activate graph-sr
 ```
 
 ### Training
