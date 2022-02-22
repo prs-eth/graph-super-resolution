@@ -1,0 +1,15 @@
+# Created by .ignore support plugin (hsz.mobi)
+#
+**__pycache__
+**.jpg
+
+**.vscode
+**.tar
+**.png
+**.npz
+
+results/
+plots/
+logs/
+.idea/
+#**.txt
