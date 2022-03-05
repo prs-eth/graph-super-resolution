@@ -34,3 +34,11 @@ python run_train.py -h
 Model checkpoints can be downloaded from [here]. 
 
 ## Citation
+```
+@inproceedings{deLutio2022,
+ author = {de Lutio, Riccardo and Becker, Alexander and D'Aronco, Stefano and Russo, Stefania and Wegner, Jan D. and Schindler, Konrad},
+ title = {Learning Graph Regularisation for Guided Super-Resolution},
+ booktitle = {CVPR},
+ year = {2022},
+} 
+```
