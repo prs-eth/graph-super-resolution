@@ -6,12 +6,9 @@ import scipy.sparse as sp
 MAX_ITER = 1000
 
 
-def create_fixed_cupy_sparse_matrices(H, W, upsampling, sparse=False):
-    if not sparse:
-        h = H // upsampling
-        w = W // upsampling
-    else:
-        h, w = H, W
+def create_fixed_cupy_sparse_matrices(H, W, upsampling):
+    h = H // upsampling
+    w = W // upsampling
 
     # create the mapping matrix from neighbor dense affinity to sparse Laplacian
     matrices = {}
@@ -29,6 +26,7 @@ def create_fixed_cupy_sparse_matrices(H, W, upsampling, sparse=False):
                 indices[:, l] = np.array([i, j, i, j + 1], dtype=int)
             else:
                 continue
+
             l += 1
 
         assert l == H * W - W
@@ -41,17 +39,12 @@ def create_fixed_cupy_sparse_matrices(H, W, upsampling, sparse=False):
         + matrices['remap_center']
 
     # create array for downsampling
-    if not sparse:
-        D = cp.zeros((h * w, h, w), dtype=np.float32)
-        for i in range(0, h):
-            for j in range(0, w):
-                D[i * w + j, i, j] = 1
-        D = cp.kron(D, cp.ones((1, upsampling, upsampling), dtype=np.float32)) / (upsampling**2)  # h*w x H x W
-        D = cp.sparse.coo_matrix(D.reshape((h * w, H * W))).tocsr()
-        DtD = D.transpose().dot(D)
-    else:
-        D = cp.sparse.identity(h*w, dtype=np.float32, format='csr')
-        DtD = D
+    D = cp.zeros((h * w, h, w), dtype=np.float32)
+    for i, j in np.ndindex(h, w):
+        D[i * w + j, i, j] = 1
+    D = cp.kron(D, cp.ones((1, upsampling, upsampling), dtype=np.float32)) / (upsampling**2)  # h*w x H x W
+    D = cp.sparse.coo_matrix(D.reshape((h * w, H * W))).tocsr()
+    DtD = D.transpose().dot(D)
     
     return {**matrices, 'M': M, 'D': D, 'DtD': DtD}
 
@@ -102,7 +95,6 @@ class GraphQuadraticSolver(torch.autograd.Function):
 
         x_cp = solve_sparse(A, b)
         x_cp = x_cp.reshape((B, -1, 1))
-
         x = torch.as_tensor(x_cp, device='cuda')
         x = x.reshape((B, 1, neighbor_affinity.shape[2], neighbor_affinity.shape[3]))
 

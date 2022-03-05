@@ -28,7 +28,7 @@ parser.add_argument('--val-every-n-epochs', type=int, default=1, help='Validatio
 parser.add_argument('--resume', type=str, default=None, help='Checkpoint path to resume')
 parser.add_argument('--seed', type=int, default=12345, help='Random seed')
 parser.add_argument('--wandb', action='store_true', default=False, help='Use Weights & Biases instead of TensorBoard')
-parser.add_argument('--wandb-project', type=str, default='forward-pixtransform', help='Wandb project name')
+parser.add_argument('--wandb-project', type=str, default='graph-sr', help='Wandb project name')
 
 # data
 parser.add_argument('--dataset', type=str, required=True, help='Name of the dataset')
@@ -56,8 +56,8 @@ parser.add_argument('--gradient-clip', type=float, default=0., help='If > 0, cli
 
 # model
 parser.add_argument('--feature-extractor', type=str, default='UResNet', help='Feature extractor for edge potentials')
-parser.add_argument('--pretrained', action='store_true', help='Initialize feature extractor with weights'
-                                                                            'pretrained on ImageNet')
+parser.add_argument('--pretrained', action='store_true', help='Initialize feature extractor with weights '
+                                                              'pretrained on ImageNet')
 parser.add_argument('--lambda-init', type=float, default=1., help='Graph lambda parameter initialization')
 parser.add_argument('--mu-init', type=float, default=.1, help='Graph mu parameter initialization')
 
