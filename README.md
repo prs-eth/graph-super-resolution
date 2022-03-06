@@ -2,8 +2,6 @@
 
 This is the official implementation of our CVPR 2022 paper by Riccardo de Lutio*, Alexander Becker*, Stefano D'Aronco, Stefania Russo, Jan Dirk Wegner and Konrad Schindler (&ast;equal contribution). [[Project Page]](https://example.com/) | [[Paper]](https://arxiv.org/)
 
-##
-
 ![Teaser](images/teaser_dark.png#gh-dark-mode-only)
 ![Teaser](images/teaser_light.png#gh-light-mode-only)
 
