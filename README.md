@@ -1,8 +1,11 @@
 # Learning Graph Regularisation for Guided Super-Resolution
 
-Riccardo de Lutio*, Alexander Becker*, Stefano D'Aronco, Stefania Russo, Jan Dirk Wegner and Konrad Schindler
+This is the official implementation of our CVPR 2022 paper by Riccardo de Lutio*, Alexander Becker*, Stefano D'Aronco, Stefania Russo, Jan Dirk Wegner and Konrad Schindler (&ast;equal contribution). [[Project Page]](https://example.com/) | [[Paper]](https://arxiv.org/)
 
-[arXiv]
+##
+
+![Teaser](images/teaser_dark.png#gh-dark-mode-only)
+![Teaser](images/teaser_light.png#gh-light-mode-only)
 
 ## Abstract
 
@@ -11,7 +14,7 @@ With the decision to employ the source as a constraint rather than only as an in
 A key property of our method is that, although the graph connectivity is restricted to the pixel lattice, the associated edge potentials are learned with a deep feature extractor and can encode rich context information over large receptive fields. By taking advantage of the sparse graph connectivity, it becomes possible to propagate gradients through the optimisation layer and learn the edge potentials from data.
 We extensively evaluate our method on several datasets, and consistently outperform recent baselines in terms of quantitative reconstruction errors, while also delivering visually sharper outputs. Moreover, we demonstrate that our method generalises particularly well to new datasets not seen during training.
 
-## Training & Testing
+## Setup
 
 We recommend creating a new conda environment with all required dependencies by running
 ```bash
@@ -19,7 +22,7 @@ conda env create -f environment.yml
 conda activate graph-sr
 ```
 
-### Training
+## Training
 
 Run the training script via
 ```bash
@@ -30,7 +33,7 @@ You can see all available training options by running
 python run_train.py -h
 ```
 
-### Reproduce the results
+## Reproducing our results
 Model checkpoints can be downloaded from [here]. 
 
 ## Citation
@@ -38,7 +41,7 @@ Model checkpoints can be downloaded from [here].
 @inproceedings{deLutio2022,
  author = {de Lutio, Riccardo and Becker, Alexander and D'Aronco, Stefano and Russo, Stefania and Wegner, Jan D. and Schindler, Konrad},
  title = {Learning Graph Regularisation for Guided Super-Resolution},
- booktitle = {CVPR},
+ booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
  year = {2022},
 } 
 ```
