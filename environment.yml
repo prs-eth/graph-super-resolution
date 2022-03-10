@@ -9,8 +9,8 @@ dependencies:
   - pytorch=1.10
   - torchvision=0.11
   - torchaudio=0.10
-  - cudatoolkit=10.2
-  - cupy=9.6
+  - cudatoolkit=11.3
+  - cupy=9.5
   - h5py=3.3
   - ruamel.yaml
   - scikit-image=0.18
