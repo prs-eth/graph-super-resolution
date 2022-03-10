@@ -1,9 +1,10 @@
 import torch
 import numpy as np
 import cupy as cp
+from cupyx.scipy.sparse.linalg import cg
 import scipy.sparse as sp
 
-MAX_ITER = 1000
+MAX_ITER = 1500
 
 
 def create_fixed_cupy_sparse_matrices(H, W, upsampling):
@@ -93,7 +94,7 @@ class GraphQuadraticSolver(torch.autograd.Function):
         A = cp.sparse.bmat(A).tocsr()
         b = cp.concatenate(bs, axis=0)
 
-        x_cp = solve_sparse(A, b)
+        x_cp = cg(A, b, maxiter=MAX_ITER)[0]
         x_cp = x_cp.reshape((B, -1, 1))
         x = torch.as_tensor(x_cp, device='cuda')
         x = x.reshape((B, 1, neighbor_affinity.shape[2], neighbor_affinity.shape[3]))
@@ -122,7 +123,7 @@ class GraphQuadraticSolver(torch.autograd.Function):
 
         grad_x_cp = cp.asarray(grad_x.detach())
         grad_x_cp = grad_x_cp.reshape((-1, 1))
-        grad_b_cp = solve_sparse(A.transpose().tocsr(), grad_x_cp)
+        grad_b_cp = cg(A.transpose().tocsr(), grad_x_cp, maxiter=MAX_ITER)[0]
         grad_b_cp = grad_b_cp.reshape((B, -1, 1))
 
         grad_neighbor_affinities = []
@@ -151,27 +152,3 @@ def build_laplacian(neighbor_affinity, remap):
         cp.sparse.diags(neighbor_affinity[2]).dot(remap['remap_left']) + \
         cp.sparse.diags(neighbor_affinity[3]).dot(remap['remap_right']) + \
         cp.sparse.diags(neighbor_affinity[4]).dot(remap['remap_center'])
-
-
-def solve_sparse(A, b, x0=None):
-    if x0 is None:
-        x = cp.ones_like(b) 
-    else:
-        x = x0.copy()
-
-    r = b - A.dot(x)
-    p = r
-    k = 0
-
-    while cp.linalg.norm(r, np.inf) > 1e-5 and k < MAX_ITER:
-        alpha = r.T.dot(r) / p.T.dot(A.dot(p))
-        x = x + alpha * p
-
-        r_next = r - alpha * A.dot(p)
-        beta = r_next.T.dot(r_next) / r.T.dot(r)
-        p = beta * p + r_next 
-        r = r_next
-
-        k += 1
-
-    return x
