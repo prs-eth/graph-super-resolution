@@ -87,7 +87,11 @@ class Evaluator:
     def resume(self, path):
         if not os.path.isfile(path):
             raise RuntimeError(f'No checkpoint found at \'{path}\'')
-        self.model.load_state_dict(torch.load(path))
+        checkpoint = torch.load(path)
+        if 'model' in checkpoint:
+            self.model.load_state_dict(checkpoint['model'])
+        else:
+            self.model.load_state_dict(checkpoint)
         print(f'Checkpoint \'{path}\' loaded.')
 
 
