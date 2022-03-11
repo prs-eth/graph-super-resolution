@@ -80,8 +80,6 @@ class Trainer:
             args.lambda_init,
             args.mu_init
         )
-        if args.resume is not None:
-            self.resume(path=args.resume)
         self.model.cuda()
 
         self.experiment_folder = new_log(os.path.join(args.save_dir, args.dataset), args)
@@ -113,12 +111,15 @@ class Trainer:
         self.val_stats = defaultdict(lambda: np.nan)
         self.best_optimization_loss = np.inf
 
+        if args.resume is not None:
+            self.resume(path=args.resume)
+
     def __del__(self):
         if not self.use_wandb:
             self.writer.close()
 
     def train(self):
-        with tqdm(range(0, self.args.num_epochs), leave=True) as tnr:
+        with tqdm(range(self.epoch, self.args.num_epochs), leave=True) as tnr:
             tnr.set_postfix(training_loss=np.nan, validation_loss=np.nan, best_validation_loss=np.nan)
             for _ in tnr:
                 self.train_epoch(tnr)
@@ -248,12 +249,25 @@ class Trainer:
                 shuffle=True, drop_last=False) for phase in phases}
 
     def save_model(self, prefix=''):
-        torch.save(self.model.state_dict(), os.path.join(self.experiment_folder, f'{prefix}_model.pth'))
+        torch.save({
+            'model': self.model.state_dict(),
+            'optimizer': self.optimizer.state_dict(),
+            'scheduler': self.scheduler.state_dict(),
+            'epoch': self.epoch + 1,
+            'iter': self.iter
+        }, os.path.join(self.experiment_folder, f'{prefix}_model.pth'))
 
     def resume(self, path):
         if not os.path.isfile(path):
             raise RuntimeError(f'No checkpoint found at \'{path}\'')
-        self.model.load_state_dict(torch.load(path))
+
+        checkpoint = torch.load(path)
+        self.model.load_state_dict(checkpoint['model'])
+        self.optimizer.load_state_dict(checkpoint['optimizer'])
+        self.scheduler.load_state_dict(checkpoint['scheduler'])
+        self.epoch = checkpoint['epoch']
+        self.iter = checkpoint['iter']
+
         print(f'Checkpoint \'{path}\' loaded.')
 
 
