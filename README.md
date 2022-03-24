@@ -23,12 +23,12 @@ conda activate graph-sr
 
 ### Data
 To reproduce our results, create a data directory (e.g. `./data`) with the three datasets:
-* **NYUv2**: Download the labeled dataset from [here](https://cs.nyu.edu/~silberman/datasets/nyu_depth_v2.html) and place the `nyu_depth_v2_labeled.mat` in `./data/NYU Depth v2`, along with our split indices file from [here](https://drive.google.com/file/d/1MclM7cejBAFBilZUJ4xCRBhzv6SJvJ7v/view?usp=sharing).
-* **Middlebury**: Download the 2001-2014 scenes from [here](https://vision.middlebury.edu/stereo/data/) and place the extracted scenes in `./data/Middlebury/<year>/<scene>`. The data splits are defined in code.
-* **DIML**: Download the indoor data sample from [here](https://dimlrgbd.github.io) and extract it into `./data/DIML/{train,test}` respectively. Then run `python scripts/create_diml_npy.py ./data/DIML` to create numpy binary files for faster data loading.
+* **NYUv2**: Download the labeled dataset from [[here]](https://cs.nyu.edu/~silberman/datasets/nyu_depth_v2.html) and place the `nyu_depth_v2_labeled.mat` in `./data/NYU Depth v2`, along with our split indices file from [[here]](https://drive.google.com/file/d/1MclM7cejBAFBilZUJ4xCRBhzv6SJvJ7v/view?usp=sharing).
+* **Middlebury**: Download the 2005-2014 scenes (full size, two-view) from [[here]](https://vision.middlebury.edu/stereo/data/) and place the extracted scenes in `./data/Middlebury/<year>/<scene>`. For the 2005 dataset, make sure to only put the scenes for which ground truth is available. The data splits are defined in code.
+* **DIML**: Download the indoor data sample from [[here]](https://dimlrgbd.github.io) and extract it into `./data/DIML/{train,test}` respectively. Then run `python scripts/create_diml_npy.py ./data/DIML` to create numpy binary files for faster data loading.
 
 ### Checkpoints
-Our pretrained model checkpoints TODO
+Our pretrained model checkpoints which were used for the numbers in our paper, for all three datasets and upsampling factors, can be downloaded from [[here]](https://drive.google.com/drive/folders/17WgvuyoPnQPpOwIlzQSn20I8PB36bCzO?usp=sharing).
 
 ## Training
 
@@ -41,6 +41,17 @@ You can see all available training options by running
 python run_train.py -h
 ```
 
+## Evaluation
+
+For test set evaluation, run
+
+```bash
+python run_eval.py --checkpoint <...> --dataset <...> --data-dir <...>
+```
+Again, you can query all available options by running 
+```bash
+python run_train.py -h
+```
 
 ## Citation
 ```
