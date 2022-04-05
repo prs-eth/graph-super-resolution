@@ -105,5 +105,10 @@ if __name__ == '__main__':
     stats = evaluator.evaluate()
     time_elapsed = time.time() - since
 
+    # de-standardize losses and convert to cm (cm^2, respectively)
+    std = evaluator.dataloader.dataset.depth_transform.std[0]
+    stats['l1_loss'] = 0.1 * std * stats['l1_loss']
+    stats['mse_loss'] = 0.01 * std**2 * stats['mse_loss']
+
     print('Evaluation completed in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
     print(stats)
