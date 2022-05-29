@@ -155,7 +155,6 @@ def load_2014(data_dir: Path, scale, scale_interpolation, use_ambient_images, sp
     return data
 
 
-# TODO check whether the MB logic has been taken from somewhere
 def load_2006(data_dir: Path, scale, scale_interpolation, use_ambient_images, split):
     f = 3740  # px
     baseline = 160  # mm
