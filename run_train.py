@@ -35,7 +35,7 @@ parser.add_argument('--dataset', type=str, required=True, help='Name of the data
 parser.add_argument('--data-dir', type=str, required=True, help='Root directory of the dataset')
 parser.add_argument('--num-workers', type=int, default=8, metavar='N', help='Number of dataloader worker processes')
 parser.add_argument('--batch-size', type=int, default=8)
-parser.add_argument('--crop_size', type=int, default=256, help='Size of the input (squared) patches')
+parser.add_argument('--crop-size', type=int, default=256, help='Size of the input (squared) patches')
 parser.add_argument('--scaling', type=int, default=8, help='Scaling factor')
 parser.add_argument('--max-rotation', type=float, default=15., help='Maximum rotation angle (degrees)')
 parser.add_argument('--no-flip', action='store_true', default=False, help='Switch off random flipping')
