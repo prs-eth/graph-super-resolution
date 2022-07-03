@@ -42,7 +42,7 @@ Run the training script via
 ```bash
 python run_train.py --dataset <...> --data-dir <...> --save-dir <...>
 ```
-You can see all available training options by running 
+Hyperparameter defaults are set to the values from the paper. Depending on the dataset, you have to adjust the number of epochs (`--num-epochs`) and the scheduler step size (`--lr-step`), see appendix A of the paper. You can see all available training options by running 
 ```bash
 python run_train.py -h
 ```

@@ -46,7 +46,7 @@ class GraphSuperResolutionNet(nn.Module):
             scaling: int,
             crop_size=256,
             feature_extractor='UResNet',
-            pretrained=False,
+            pretrained=True,
             lambda_init=1.0,
             mu_init=0.1
     ):
