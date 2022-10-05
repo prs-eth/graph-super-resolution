@@ -2,11 +2,11 @@
 
 This is the official implementation of the paper: 
 
-### [Learning Graph Regularisation for Guided Super-Resolution (CVPR 2022)](https://arxiv.org/abs/2203.14297)
+### "Learning Graph Regularisation for Guided Super-Resolution" (CVPR 2022)
 
-Riccardo de Lutio*, Alexander Becker*, Stefano D'Aronco, Stefania Russo, Jan Dirk Wegner and Konrad Schindler 
+Riccardo de Lutio*, Alexander Becker*, Stefano D'Aronco, Stefania Russo, Jan Dirk Wegner and Konrad Schindler (&ast;equal contribution)
 
-&ast;Equal contribution
+#### [[Paper]](https://arxiv.org/abs/2203.14297) &nbsp;|&nbsp; [[5 minute explainer video]](https://www.youtube.com/watch?v=ZFDErHUlCBE&ab_channel=RiccardodeLutio)
 
 ![Teaser](images/teaser_dark.png#gh-dark-mode-only)
 ![Teaser](images/teaser_light.png#gh-light-mode-only)
